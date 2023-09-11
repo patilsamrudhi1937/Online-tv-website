@@ -1,0 +1,1225 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <title>Online Live TV Channel</title>
+    <link href="icon/favicon.ico" type="image" rel="icon"></link>
+
+
+
+</head>
+<style>
+    * {
+        margin: 0;
+    }
+    
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: lightgrey;
+    }
+    
+    h1 {
+        color: white;
+        text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        font-size: 2.5em;
+        /* 40px/16=2.5em */
+        font-family: ui-monospace;
+    }
+    
+    .title {
+        font-family: fantasy;
+    }
+    
+    .navbar {
+        width: 100%;
+        height: 50px;
+        background-color: black;
+        position: sticky;
+        top: 0;
+        text-decoration: none;
+    }
+    
+    .navbar-container {
+        display: flex;
+        align-items: center;
+        padding: 0 50px;
+        height: 100%;
+        color: white;
+        font-family: "Sen", sans-serif;
+        text-decoration: none;
+    }
+    
+    .logo-container {
+        flex: 1;
+    }
+    
+    .logo {
+        font-size: 30px;
+        color: #4dbf00;
+    }
+    
+    .menu-container {
+        flex: 6;
+    }
+    
+    .menu-list {
+        display: flex;
+        list-style: none;
+    }
+    
+    .menu-list-item {
+        margin-right: 30px;
+    }
+    
+    .menu-list-item.active {
+        font-weight: bold;
+    }
+    
+    .profile-container {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .profile-text-container {
+        margin: 0 20px;
+    }
+    
+    .profile-picture {
+        width: 32px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    input[type=text]:focus {
+        width: 100%;
+        padding-left: 16px
+    }
+    
+    .toggle {
+        width: 40px;
+        height: 20px;
+        background-color: white;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: relative;
+    }
+    
+    .toggle-icon {
+        color: goldenrod;
+    }
+    
+    .toggle-ball {
+        width: 18px;
+        height: 18px;
+        background-color: sandybrown;
+        position: absolute;
+        right: 1px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 2s ease all;
+    }
+    
+    .toggle-dark-mode {
+        background-color: salmon;
+    }
+    
+    .sidebar {
+        width: 50px;
+        height: 100%;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60px;
+    }
+    
+    .left-menu-icon {
+        color: white;
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .container {
+        background-color: rgb(75, 14, 14);
+        min-height: calc(100vh - 50px);
+        color: white;
+    }
+    
+    .content-container {
+        margin-left: 50px;
+    }
+    
+    .featured-content {
+        height: 50vh;
+        padding: 50px;
+    }
+    
+    .featured-title {
+        width: 200px;
+    }
+    
+    .featured-desc {
+        width: 500px;
+        color: lightgray;
+        margin: 30px 0;
+    }
+    
+    .arrow {
+        font-size: 120px;
+        position: absolute;
+        top: 90px;
+        right: 0;
+        color: lightgray;
+        opacity: 0.5;
+        cursor: pointer;
+    }
+    
+    .serial-list-container {
+        padding: 0 20px;
+    }
+    
+    .serial-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .serial-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .serial-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .serial-list-item:hover .serial-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .serial-list-item:hover .serial-list-item-title,
+    .serial-list-item:hover .serial-list-item-desc,
+    .serial-list-item:hover .serial-list-item-button {
+        opacity: 1;
+    }
+    
+    .serial-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .serial-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .serial-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .container.active {
+        background-color: white;
+    }
+    
+    .navbar-container.active {
+        background-color: white;
+        color: black;
+    }
+    
+    .sidebar.active {
+        background-color: white;
+    }
+    
+    .left-menu-icon.active {
+        color: black;
+    }
+    
+    .toggle.active {
+        background-color: black;
+    }
+    
+    .toggle-ball.active {
+        background-color: white;
+        transform: translateX(-20px);
+    }
+    
+    @media only screen and (max-width: 940px) {
+        .menu-container {
+            display: none;
+        }
+    }
+    
+    .News-list-container {
+        padding: 0 20px;
+    }
+    
+    .News-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .News-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .News-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .News-list-item:hover .News-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .News-list-item:hover .News-list-item-title,
+    .News-list-item:hover .News-list-item-desc,
+    .News-list-item:hover .News-list-item-button {
+        opacity: 1;
+    }
+    
+    .News-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .News-list-item-title {
+        background-color: springgreen;
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .News-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .movie-list-container {
+        padding: 0 20px;
+    }
+    
+    .movie-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .movie-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .movie-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .movie-list-item:hover .movie-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .movie-list-item:hover .movie-list-item-title,
+    .movie-list-item:hover .movie-list-item-desc,
+    .movie-list-item:hover .movie-list-item-button {
+        opacity: 1;
+    }
+    
+    .movie-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .movie-list-item-title {
+        background-color: #333;
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .movie-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .music-list-container {
+        padding: 0 20px;
+    }
+    
+    .music-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .music-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .music-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .music-list-item:hover .music-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .music-list-item:hover .music-list-item-title,
+    .music-list-item:hover .music-list-item-desc,
+    .music-list-item:hover .music-list-item-button {
+        opacity: 1;
+    }
+    
+    .music-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .music-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .music-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .sports-list-container {
+        padding: 0 20px;
+    }
+    
+    .sports-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .sports-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .sports-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .sports-list-item:hover .sports-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .sports-list-item:hover .sports-list-item-title,
+    .sports-list-item:hover .sports-list-item-desc,
+    .sports-list-item:hover .sports-list-item-button {
+        opacity: 1;
+    }
+    
+    .sports-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .sports-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .sports-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .dev-list-container {
+        padding: 0 20px;
+    }
+    
+    .dev-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .dev-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .dev-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .dev-list-item:hover .dev-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .dev-list-item:hover .dev-list-item-title,
+    .dev-list-item:hover .dev-list-item-desc,
+    .dev-list-item:hover .dev-list-item-button {
+        opacity: 1;
+    }
+    
+    .dev-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .dev-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .dev-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .kid-list-container {
+        padding: 0 20px;
+    }
+    
+    .kid-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .kid-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .kid-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .kid-list-item:hover .kid-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .kid-list-item:hover .kid-list-item-title,
+    .kid-list-item:hover .kid-list-item-desc,
+    .kid-list-item:hover .kid-list-item-button {
+        opacity: 1;
+    }
+    
+    .kid-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .kid-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .kid-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .fashion-list-container {
+        padding: 0 20px;
+    }
+    
+    .fashion-list-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .fashion-list {
+        display: flex;
+        align-items: center;
+        height: 300px;
+        transform: translateX(0);
+        transition: all 1s ease-in-out;
+    }
+    
+    .fashion-list-item {
+        margin-right: 30px;
+        position: relative;
+    }
+    
+    .fashion-list-item:hover .fashion-list-item-img {
+        transform: scale(1.2);
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    
+    .fashion-list-item:hover .fashion-list-item-title,
+    .fashion-list-item:hover .fashion-list-item-desc,
+    .fashion-list-item:hover .fashion-list-item-button {
+        opacity: 1;
+    }
+    
+    .fashion-list-item-img {
+        transition: all 1s ease-in-out;
+        width: 270px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .fashion-list-item-title {
+        padding: 0 10px;
+        font-size: 32px;
+        font-weight: bold;
+        position: absolute;
+        top: 10%;
+        left: 50px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    .fashion-list-item-desc {
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        top: 30%;
+        left: 50px;
+        width: 230px;
+        opacity: 0;
+        transition: 1s all ease-in-out;
+    }
+    
+    footer {
+        background-color: #333;
+        overflow: hidden;
+        color: white;
+        font-family: fantasy;
+        font-size: 20px;
+    }
+    
+    footer a {
+        text-decoration: none;
+        padding: 20px;
+        text-align: center;
+        float: left;
+        color: white;
+    }
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <h1 class="logo">Menu</h1>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <b><a class="menu-list-item active" href="#">Home</a></b>
+                    </b><a class="menu-list-item" href="https://www.hotstar.com/in">Hostar</a></b>
+                    <b><a class="menu-list-item"href="https://www.netflix.com/in/">Netflix</a></b>
+                    <b><a class="menu-list-item" href="https://www.sonyliv.com/">Sony Liv</a></b>
+                    <b><a class="menu-list-item"href="https://www.mxplayer.in/">Mx Plyer</a></b>
+                    <b><a class="menu-list-item"href="https://www.zee5.com/">Zee5</a></b>
+                    <b><a class="menu-list-item"href="https://mola.tv/">Mola TV</a></b>
+                    <b><a class="menu-list-item"href="https://www.hindilinks4u.to/latest/page/3/?orderby=views">Movies</a></b>
+                    <b><a class="menu-list-item"href="https://www.linkedin.com/in/samrudhi-patil-ba0046207">About us</a></b>
+
+
+                </ul>
+            </div>
+            <div class="profile-container">
+                <a href="https://profile.samrudhihanmant.repl.co/#"><img class="profile-picture" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\tg.jpg" alt="Profile Photo"></a>
+                <div class="profile-text-container">
+                    <span class="profile-text">Profile</span>
+                    <i class="fas fa-caret-down"></i>
+                </div>
+
+
+                <div class="toggle">
+                    <i class="fas fa-moon toggle-icon"></i>
+                    <i class="fas fa-sun toggle-icon"></i>
+                    <div class="toggle-ball"></div>
+                    <div class="toogle-dark-mode"></div>
+                    <button onclick="myFunction()"></button>
+                    <script>
+                        function myFunction() {
+                            var element = document.body;
+                            element.classList.toggle("toggle-dark-mode");
+                        }
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <i class="left-menu-icon fas fa-Search"></i>
+        <i class="left-menu-icon fas fa-Home"></i>
+        <i class="left-menu-icon fas fa-Users"></i>
+        <i class="left-menu-icon fas fa-Bookmark"></i>
+        <i class="left-menu-icon fas fa-TV"></i>
+        <i class="left-menu-icon fas fa-hourglass-start"></i>
+        <i class="left-menu-icon fas fa-Serial"></i>
+    </div>
+
+    <div class="container">
+        <div class="content-container">
+
+            <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515)" , src="C:\Users\Swapnil Patil\OneDrive\Desktop\Documents\Online Tv Channel\img\gggg.png">
+                <a href="https://www.directv.com/networks"></a>
+                <img class="featured-title" src="C:\Users\Swapnil Patil\OneDrive\Desktop\Documents\Online Tv Channel\img\gggg.png" alt="Tv Channel">
+                <p class="featured-desc"></p>
+
+            </div>
+
+
+            <div class="serial-list-container">
+                <b><center><h1 class="serial-list-title">SERIALS</h1></center></b>
+                <div class="serial-list-wrapper">
+                    <div class="serial-list">
+                        <div class="serial-list-item">
+                            <a href="https://www.airtelxstream.in/"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\Airtel S.png" alt="">
+                                <span class="serial-list-item-title"></span>
+                                <p class="serial-list-item-desc"></p>
+
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.mxplayer.in/live-tv/food-food-live-channel-7005foodfoodchannelin"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\Fd.jpg" alt="">
+                                <span class="serial-list-item-title"></span>
+                                <p class="serial-list-item-desc"></p>
+
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.airtelxstream.in/livetv-channels/zee-anmol/MWTV_LIVETVCHANNEL_692"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ZA.png" alt="">
+                                <span class="serial-list-item-title" </span>
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.mxplayer.in/live-tv/epic-live-channel-2639epicin"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\epic.jfif" alt="">
+                                <span class="serial-list-item-title"></span>
+                                <p class="serial-list-item-desc"></p>
+
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.zee5.com/channels/details/dd-bharati/0-9-ddbharati"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\DDj.jpg" alt="">
+                                <span class="serial-list-item-title"></span>
+                                <p class="serial-list-item-desc"></p>
+
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.shemaroome.com/all-channels/shemaroo-tv"><img class="serial-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\Shemaroo_TV_Logo.png" alt="">
+                                <span class="serial-list-item-title"></span>
+                                <p class="serial-list-item-desc"></p>
+
+                        </div>
+                        <div class="serial-list-item">
+                            <a href="https://www.voot.com/"></a><img class="seria-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\voot.jfif" alt="">
+                            <span class="serial-list-item-title"></span>
+                            <p class="serial-list-item-desc"></p>
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+        </div>
+
+
+        <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\iuut.jpg');">
+
+            <p class="featured-desc"></p>
+
+        </div>
+        <div class="News-list-container">
+            <b><center><h1 class="News-list-title">NEWS</h1></center></b>
+            <div class="News-list-wrapper">
+                <div class="News-list">
+                    <div class="News-list-item">
+                        <a href="https://zeenews.india.com/live-tv"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ZEE NEWS.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://www.aajtak.in/indiatoday-livetv"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\eew.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://news.abplive.com/"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\abp.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://www.twitch.tv/primenewstwitch/"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\pn.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://www.ndtv.com/"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\nd.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://timesofindia.indiatimes.com/live-tv"><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\toi.png" alt="">
+                            <span class="News-list-item-title"></span>
+                            <p class="News-list-item-desc"></p>
+
+                    </div>
+                    <div class="News-list-item">
+                        <a href="https://timesofindia.indiatimes.com/live-tv"></a><img class="News-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\toi.png" alt="">
+                        <span class="News-list-item-title"></a></span>
+                        <p class="News-list-item-desc"></p>
+
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+        </div>
+
+
+
+        <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ng.jpg');">
+
+            <p class="featured-desc"></p>
+        </div>
+        <div class="movie-list-container">
+            <b><center><h1 class="movie-list-title">NEW RELEASES MOVIES</h1></center></b>
+            <div class="movie-list-wrapper">
+                <div class="movie-list">
+                    <div class="movie-list-item">
+                        <a href="https://penindia.in/"><img class="movie-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\pnl.png" alt="">
+                            <span class="movie-list-item-title"></span>
+                            <p class="movie-list-item-desc"></p>
+
+                    </div>
+                    <div class="movie-list-item">
+                        <a href="https://www.mxplayer.in/live-tv/filmy-live-channel-0079filmyin"><img class="movie-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\fm.png" alt="">
+                            <span class="movie-list-item-title"></span>
+                            <p class="movie-list-item-desc"></p>
+
+                    </div>
+                    <div class="movie-list-item">
+                        <a href="https://www.mxplayer.in/live-tv/bflix-movies-live-channel-5045bflixmoviesin?category=Movies"><img class="movie-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\bfi.jfif" alt="">
+                            <span class="movie-list-item-title"></span>
+                            <p class="movie-list-item-desc"></p>
+
+                    </div>
+                    <div class="movie-list-item">
+                        <a href="https://www.mxplayer.in/live-tv/surya-cinema-live-channel-7080suryacinemain"><img class="movie-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\su.png" alt="">
+                            <span class="movie-list-item-title"></span>
+                            <p class="movie-list-item-desc"></p>
+
+                    </div>
+                    <div class="movie-list-item">
+                        <a href="https://www.mxplayer.in/live-tv/wow-cinema-one-live-channel-2940wowcinemaonein"></a>
+                        <img class="movie-list-item-img" src="img/wc.jpg" alt="">
+                        <span class="movie-list-item-title"></span>
+                        <p class="movie-list-item-desc"></p>
+
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </div>
+    </div>
+
+
+
+
+    <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('img/nge.jpg');">
+
+        <p class="featured-desc"></p>
+    </div>
+    <div class="music-list-container">
+        <b><center><h1 class="music-list-title">MUSIC</h1></center></b>
+        <div class="music-list-wrapper">
+            <div class="music-list">
+                <div class="music-list-item">
+                    <a href="https://www.zee5.com/channels/details/9x-jalwa/0-9-133"><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\9.jpg" alt="">
+                        <span class="music-list-item-title"></span>
+                        <p class="music-list-item-desc"></p>
+
+                </div>
+                <div class="music-list-item">
+                    <a href="https://timesofindia.indiatimes.com/live-tv/zoom-tv/video"><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ze.jfif" alt="">
+                        <span class="music-list-item-title"></span>
+                        <p class="music-list-item-desc"></p>
+
+                </div>
+                <div class="music-list-item">
+                    <a href="https://www.zee5.com/channels/details/9x-jhakaas/0-9-134"><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\9x.jfif" alt="">
+                        <span class="music-list-item-title"></a></span>
+                        <p class="music-list-item-desc"></p>
+
+                </div>
+                <div class="music-list-item">
+                    <a href="https://www.epicon.in/live-tv/showbox-live-tv"><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\Sb.png" alt="">
+                        <span class="music-list-item-title"></a></span>
+                        <p class="music-list-item-desc"></p>
+
+                </div>
+                <div class="music-list-item">
+                    <a href="https://www.zee5.com/channels/details/zing/0-9-zing"><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\zq.jfif" alt="">
+                        <span class="music-list-item-title"></span>
+                        <p class="music-list-item-desc"></p>
+
+                </div>
+                <div class="music-list-item">
+                    <a href="https://www.zee5.com/channels/details/9x-jhakaas/0-9-134"></a><img class="music-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\9x.jfif" alt="">
+                    <span class="music-list-item-title"></span>
+                    <p class="music-list-item-desc"></p>
+
+                </div>
+            </div>
+        </div>
+        <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    </div>
+
+
+
+
+    <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('img/eeee.jfif');">
+
+        <p class="featured-desc"></p>
+
+    </div>
+    <div class="sports-list-container">
+        <b><center><h1 class="sports-list-title">SPORTS</h1></center></b>
+        <div class="sports-list-wrapper">
+            <div class="sports-list">
+                <div class="sports-list-item">
+                    <a href="https://olympics.com/en/live/"><img class="sports-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ooo.png" alt="">
+                        <span class="sports-list-item-title"></a></span>
+                        <p class="sports-list-item-desc"></p>
+                </div>
+                <div class="sports-list-item">
+                    <a href="https://www.mxplayer.in/live-tv/sports-tv-live-channel-8016sportstvin"><img class="sports-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\spw.png" alt="">
+                        <span class="sports-list-item-title"></span>
+                        <p class="sports-list-item-desc"></p>
+
+                </div>
+                <div class="sports-list-item">
+                    <a href="https://www.espncricinfo.com/series/ipl-2021-1249214?ex_cid=ipl2021:google_cpc:search:branddesktop_feed:msn&gclid=CjwKCAjwtfqKBhBoEiwAZuesiOSvrFoV4x_Felr3Byibgn_o7PDE4w8z_TRwZgQOx7h-GrFJkPjd3BoCE4UQAvD_BwE"><img class="sports-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\li.png" alt="">
+                        <span class="sports-list-item-title"></span>
+                        <p class="sports-list-item-desc"></p>
+
+                </div>
+                <div class="sports-list-item">
+                    <a href="https://www.cricbuzz.com/"><img class="sports-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\cb.jfif" alt="">
+                        <span class="sports-list-item-title"></span>
+                        <p class="sports-list-item-desc"></p>
+
+                </div>
+                <div class="sports-list-item">
+                    <a href="https://prasarbharati.gov.in/live-tv/"><img class="sports-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\23" alt=""></a>
+                    <span class="sports-list-item-title"></span>
+                    <p class="sports-list-item-desc"></p>
+
+                </div>
+            </div>
+        </div>
+        <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    </div>
+
+
+    <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('img/po.jfif');">
+
+        <p class="featured-desc"></p>
+    </div>
+
+
+    <div class="dev-list-container">
+        <center><b><h1 class="dev-list-title">DEVOTIONAL</h1></center></b>
+            <div class="dev-list-wrapper">
+                <div class="dev-list">
+                    <div class="dev-list-item">
+
+                        <a href="https://www.shemaroome.com/all-channels/hare-krsna-tv"><img class="dev-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\hk.png" alt="Pen india">
+                            <span class="dev-list-item-title"></a></span>
+                    </div>
+                    <div class="dev-list-item">
+                        <a href="https://www.zee5.com/channels/details/sanskar-tv/0-9-channel_1144658965"><img class="dev-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\sk.jpg" alt="">
+                            <span class="dev-list-item-title"></span>
+                    </div>
+                    <div class="dev-list-item">
+                        <a href="https://www.zee5.com/channels/details/satsang-tv/0-9-channel_1565694979"><img class="dev-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ss.jfif" alt="">
+                            <span class="dev-list-item-title"></span>
+                    </div>
+                    <div class="dev-list-item">
+                        <a href="https://www.zee5.com/channels/details/watch-krishna-vani-online/0-9-166"><img class="dev-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\ks.jfif" alt="">
+                            <span class="dev-list-item-title"></span>
+                    </div>
+                    <div class="dev-list-item">
+                        <a href="https://www.mxplayer.in/live-tv/bhakti-sagar-live-channel-5835bhaktisagarin"></a><img class="dev-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\bs.jfif" alt="">
+                        <span class="dev-list-item-title"></span>
+
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+    </div>
+
+
+
+    <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('img/kt.png');">
+
+
+        <p class="featured-desc"></p>
+
+    </div>
+
+
+    <div class="kid-list-container">
+        <b><center><h1 class="kid-list-title">KIDS</h1></center></b>
+        <div class="kid-list-wrapper">
+            <div class="kid-list">
+                <div class="kid-list-item">
+                    <a href="https://pbskids.org/video/livetv"><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\pbs.png" alt="">
+
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.nasa.gov/nasalive"><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\nasa.png" alt="">
+                        <span class="kid-list-item-title"></span>
+
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.cartoonnetworkindia.com/"><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\cn.png" alt="">
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.pogo.tv/"><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\oog.png" alt="">
+                        <span class="kid-list-item-title"></span>
+                        <p class="kid-list-item-desc"></p>
+                        </br>
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.desifree.tv/booba/"></a><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\jjj.png" alt="">
+                    <span class="kid-list-item-title"></a></span>
+                    <p class="kid-list-item-desc"></p>
+
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.youtube.com/watch?v=m0WFky-FZNM"></a><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\jhj.jfif" alt="">
+                    <span class="kid-list-item-title"></span>
+                    <p class="kid-list-item-desc"></p>
+
+                </div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </div>
+    </div>
+    <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url('img/fs.jfif');">
+
+
+        <p class="featured-desc"></p>
+
+    </div>
+    <div class="fashion-list-container">
+        <b><center><h1 class="fashion-list-title">FASHION</h1></center></b>
+        <div class="fashion-list-wrapper">
+            <div class="fashion-list">
+                <div class="fashion-list-item">
+                    <a href="https://www.mxplayer.in/live-tv/fashion-tv-mumbai-live-channel-8069fashiontvmumbaiin"><img class="fashion-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\fsw.png" alt="">
+
+                </div>
+                <div class="fashion-list-item">
+                    <a href="https://www.zee5.com/channels/details/fashion-tv-paris/0-9-393"><img class="fashion-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\fsk.png" alt="">
+                        <span class="fashion-list-item-title"></span>
+                        <p class="fashion-list-item-desc"></p>
+
+
+                </div>
+                <div class="fashion-list-item">
+                    <a href="https://wfc.tv/en/live"><img class="fashion-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\wf.jpg" alt="">
+                        <span class="fashion-list-item-title"></span>
+                        <p class="fashion-list-item-desc"></p>
+                </div>
+                <div class="fashion-list-item">
+                    <a href="https://globalfashionchannel.com/"><img class="fashion-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\gfc.png" alt="">
+                        <span class="fashion-list-item-title"></a></span>
+                        <p class="fashion-list-item-desc"></p>
+                        </br>
+                </div>
+                <div class="fashion-list-item">
+                    <a href="https://oneotv.com/us-fashion-plus-live-tv/"><img class="fashion-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\oneo.jfif" alt="">
+                        <span class="fashion-list-item-title"></a></span>
+                        <p class="fashion-list-item-desc"></p>
+
+                </div>
+                <div class="kid-list-item">
+                    <a href="https://www.youtube.com/watch?v=m0WFky-FZNM"></a><img class="kid-list-item-img" src="C:\Users\Swapnil Patil\OneDrive\Documents\Online Tv Channel\img\jhj.jfif" alt="">
+                    <span class="kid-list-item-title"></span>
+                    <p class="kid-list-item-desc"></p>
+
+                </div>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    <footer>
+
+
+
+        <a href="https://contact.samrudhihanmant.repl.co/"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; Contact </a>
+        <a href="#">Copyright@2021</a>
+        <a href="#">Terms and use</a>
+        <a href="https://www.accenture.com/in-en/support/company-cookies-similar-technology">Cookies Policy</a>
+        <a href="https://www.watchhallmarktv.com/faq.html" alt="">FAQ</a>
+        <a href="#">Write Us</a>
+        <a href="https://www.blogger.com/blog/posts/5579215548951393236">Blog</a>
+
+    </footer>
+    <script src="server.js"></script>
+</body>
+
+</html>
